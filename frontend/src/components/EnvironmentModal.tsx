@@ -27,7 +27,10 @@ export default function EnvironmentModal({ isOpen, onClose, onRefresh }: Environ
   const [variables, setVariables] = useState<EnvVar[]>([]);
   const [isSaving, setIsSaving] = useState(false);
 
-  const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
+  let API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
+  if (API_BASE && !API_BASE.includes('/api')) {
+    API_BASE = API_BASE.replace(/\/$/, '') + '/api';
+  }
 
   useEffect(() => {
     if (isOpen) {

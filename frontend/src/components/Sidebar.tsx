@@ -66,7 +66,10 @@ export default function Sidebar({
   const [searchQuery, setSearchQuery] = useState('');
   const [expandedCollections, setExpandedCollections] = useState<Record<number, boolean>>({});
 
-  const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
+  let API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
+  if (API_BASE && !API_BASE.includes('/api')) {
+    API_BASE = API_BASE.replace(/\/$/, '') + '/api';
+  }
 
   useEffect(() => {
     fetchCollections();
